@@ -107,6 +107,18 @@ Dependencies matter, so run them in this order:
 4. Snapshots
 5. Elastic IPs last, since load balancers and NAT gateways hold them until they're gone
 
+The script for each step:
+
+| Step | Script(s) |
+|---|---|
+| 1. Auto Scaling groups | `delete-auto-scaling-groups.py` |
+| 2. EC2, load balancers, NAT gateways, VPC endpoints, RDS | `delete-ec2-instances.py`, `delete-load-balancers.py`, `delete-nat-gateways.py`, `delete-vpc-endpoints.py`, `delete-rds-instances.py` |
+| 3. EBS volumes | `delete-ebs-volumes.py` |
+| 4. Snapshots | `delete-ebs-snapshots.py` |
+| 5. Elastic IPs | `release-elastic-ips.py` |
+
+Target groups have no step of their own. Run `delete-target-groups.py` after the load balancers are gone.
+
 ### Region
 
 Every script asks which region to use when it starts:
